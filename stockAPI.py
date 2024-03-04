@@ -28,9 +28,4 @@ class Stock:
     def getHistoricalData(self, start_date: str, end_date: str):
         data = self.stock.history(start=start_date, end=end_date)
         return data
-    
-c = Stock('AAPL')
-print(c.getCurrentPrice())
-print(c.getCompanyInfo())
-print(c.getHistoricalData('2020-01-01', '2021-01-01'))
-
+   
