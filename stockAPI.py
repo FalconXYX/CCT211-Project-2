@@ -55,7 +55,7 @@ class Stock:
         return timelist, value_list
     def getLastWeekData(self):
         timelist = []
-        data = self.stock.history(period='7d', interval='90m')
+        data = self.stock.history(period='7d', interval='1d')
         lastday = data["Close"]  
 
         index_list = lastday.index.tolist()
