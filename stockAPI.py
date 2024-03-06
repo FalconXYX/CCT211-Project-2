@@ -53,31 +53,63 @@ class Stock:
             i = i.tz_convert(local_tz)
             timelist.append(i.strftime('%Y-%m-%d %H:%M'))
         return timelist, value_list
-
     def getLastWeekData(self):
         timelist = []
-        data = self.stock.history(period='1w', interval='30m')
+        data = self.stock.history(period='7d', interval='90m')
         lastday = data["Close"]  
+
         index_list = lastday.index.tolist()
         value_list = lastday.tolist()
         local_tz = get_localzone()
         for i in index_list:
             i = i.tz_convert(local_tz)
-            timelist.append(i.strftime('%Y-%m-%d %H:%M'))
+            timelist.append(i.strftime('%Y-%m-%d'))
         return timelist, value_list
     def getLastMonthData(self):
-        data = self.stock.history(period='1mo', interval='12h')
-        return data
+        timelist = []
+        data = self.stock.history(period='1mo', interval='1d')
+        lastday = data["Close"]  
+
+        index_list = lastday.index.tolist()
+        value_list = lastday.tolist()
+        local_tz = get_localzone()
+        for i in index_list:
+            i = i.tz_convert(local_tz)
+            timelist.append(i.strftime('%Y-%m-%d'))
+        return timelist, value_list
     def getLast6MonthData(self):
-        data = self.stock.history(period='6mo')
-        return data
+        timelist = []
+        data = self.stock.history(period='6mo', interval='1d')
+        lastday = data["Close"]  
+
+        index_list = lastday.index.tolist()
+        value_list = lastday.tolist()
+        local_tz = get_localzone()
+        for i in index_list:
+            i = i.tz_convert(local_tz)
+            timelist.append(i.strftime('%Y-%m-%d'))
+        return timelist, value_list
     def getLastYearData(self):
-        data = self.stock.history(period='1y')
-        return data
+        timelist = []
+        data = self.stock.history(period='1y', interval='1d')
+        lastday = data["Close"]  
+
+        index_list = lastday.index.tolist()
+        value_list = lastday.tolist()
+        local_tz = get_localzone()
+        for i in index_list:
+            i = i.tz_convert(local_tz)
+            timelist.append(i.strftime('%Y-%m-%d'))
+        return timelist, value_list
     def getAllTimeData(self):
+        timelist = []
         data = self.stock.history(period='max')
-        return data
-c = Stock('AAPL')
+        lastday = data["Close"]  
 
-print(c.getLastWeekData())
-
+        index_list = lastday.index.tolist()
+        value_list = lastday.tolist()
+        local_tz = get_localzone()
+        for i in index_list:
+            i = i.tz_convert(local_tz)
+            timelist.append(i.strftime('%Y-%m-%d'))
+        return timelist, value_list
