@@ -1,18 +1,14 @@
+#DO NOT USE THIS FOR THE MAIN CODE THIS ID FOR TESTING AND EXAMPLE ONLY
+
+
 from tkinter import *
-import matplotlib
-import matplotlib.pyplot as plt
 import addGraph
 # plot function is created for 
 # plotting the graph in 
 # tkinter window 
 def plot(window): 
-
-	
-	canvas = addGraph.hour("AAPL", window, "Apple")
+	canvas = addGraph.day("AAPL", window, "Apple")
 	canvas.get_tk_widget().pack() 
-
-
-	# placing the toolbar on the Tkinter window 
 
 # the main Tkinter window 
 window = Tk() 
@@ -21,7 +17,7 @@ window = Tk()
 window.title('Plotting in Tkinter') 
 
 # dimensions of the main window 
-window.geometry("500x500") 
+window.geometry("600x600") 
 
 # button that displays the plot 
 plot_button = Button(master = window, 

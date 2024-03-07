@@ -3,9 +3,6 @@ from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg) # the figure t
 import stockAPI
 import createGraph
 
-
-
-
 def hour(ticker: str, window, name: str ):
     stock = stockAPI.Stock(ticker)
     d,dd = stock.getLastHourData()
