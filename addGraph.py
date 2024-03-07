@@ -2,7 +2,10 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg) # the figure that will contain the plot 
 import stockAPI
 import createGraph
-
+"""
+1. To create a graph for a specific time period, the user will need to input the ticker, the window, and the name of the stock.
+This info should come from the stockRecord class. then depending on what time period the user wants to see you will call the time period and it will out put the canvas.
+the canvas can be used to display the graph in the window. but you must feed in the window to the function."""
 def hour(ticker: str, window, name: str ):
     stock = stockAPI.Stock(ticker)
     d,dd = stock.getLastHourData()
