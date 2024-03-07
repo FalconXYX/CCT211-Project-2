@@ -1,31 +1,39 @@
 import json
 import stockRecord
-"""{
-  "username": "investor123",
-  "password": "securePassword!",
-  "name": "John Doe",
-  "totalInvested": 50000,
-  "netWorth": 55000,
-  "stocks": [
-    {
-      "symbol": "AAPL",
-      "name": "Apple Inc.",
-      "shares": 50,
-      "purchasePrice": 100
-    },
-    {
-      "symbol": "MSFT",
-      "name": "Microsoft Corporation",
-      "shares": 30,
-      "purchasePrice": 200
-    },
-    {
-      "symbol": "TSLA",
-      "name": "Tesla, Inc.",
-      "shares": 20,
-      "purchasePrice": 400
-    }
-  ]
-}
-"""
+import stockAPI;
+
 class Acount:
+    def __init__(self, username: str, password: str, name: str, totalInvested: float, netWorth: float, stocks: list):
+        self.username = username
+        self.password = password
+        self.name = name
+        self.totalInvested = totalInvested
+        self.netWorth = netWorth
+        self.stocks = stocks
+    def addStock(self, symbol: str, name: str, shares: int, purchasePrice: float):
+        s= stockRecord.StockRecord(symbol, name, shares, purchasePrice)
+        self.stocks.append(s)
+    def removeStock(self, symbol: str):
+        for s in self.stocks:
+            if s.symbol == symbol:
+                self.stocks.remove(s)
+    def updateStock(self, symbol: str, shares: int, purchasePrice: float):
+        for s in self.stocks:
+            if s.symbol == symbol:
+    
+                s.shares += shares
+                #get a weighted average of the purchase price
+                s.purchasePrice = (s.purchasePrice * s.shares + purchasePrice * shares) / (s.shares + shares)
+                
+    def updateTotalInvested(self):
+        t = 0
+        for s in self.stocks:
+            t += s.shares * s.purchasePrice
+        self.totalInvested = t
+    def updateNetWorth(self):
+        t = 0
+        for s in self.stocks:
+            stock = stockAPI.Stock(s.symbol)
+            t += stock.getCurrentPrice() * s.shares
+        self.netWorth = t
+

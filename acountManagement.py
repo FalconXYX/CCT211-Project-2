@@ -1,4 +1,6 @@
 import json
+import acount
+import stockRecord
 # An acount is made up of a username,a password,  a name, total invested,net worth, and a list of stocks
 """
 Instuctions on how to use:
@@ -16,10 +18,33 @@ def checkExistinAcount(username: str) -> bool:
             return True
     except:
         return False
-def createAcount():
-    pass
-def login():
-    pass
-def checkPassword():
-    pass
+def createAcount(username: str, password: str, name: str)-> acount.Acount:
+    dict = {
+        "username": username,
+        "password": password,
+        "name": name,
+        "totalInvested": 0,
+        "netWorth": 0,
+        "stocks": []
+    }
+    with open('Acounts/'+username+'.json', 'w') as f:
+        json.dump(dict, f)
+    return acount.Acount(username, password, name, 0, 0, [])
+def login(username: str, password: str):
+    with open('Acounts/'+username+'.json') as f:
+        data = json.load(f)
+        if(checkPassword(data['password'], password)):
+            #create stockRecord objects
+            stocks = []
+            for i in data['stocks']:
+                stocks.append(stockRecord.StockRecord(i['symbol'], i['name'], i['shares'], i['purchasePrice']))
+
+            #create acount object
+            a = acount.Acount(data['username'], data['password'], data['name'], data['totalInvested'], data['netWorth'], stocks)
+        else:
+            return False,""
+
+def checkPassword(answer: str, password: str) -> bool:
+    return answer == password
+    
 
