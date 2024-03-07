@@ -1,7 +1,5 @@
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure 
-from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg) 
-import stockAPI
 class Graph:
     def __init__(self, dataList: list, dateList: list):
         self.dataList = dataList
@@ -28,6 +26,4 @@ class Graph:
         
         displayed_labels = [label if index % n == 0 else '' for index, label in enumerate(times)]
         self.graph.set_xticks(ticks=range(len(times)), labels=displayed_labels, rotation=60) # Rotate labels for better readability
-#last hour,day,week y = 15
-#last month,6month y = 10
 
