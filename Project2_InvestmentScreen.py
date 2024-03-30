@@ -14,29 +14,32 @@ window.title("Project 2 - Investment Screen")
 
 # Defining the size of the window using the "geometry" function
 window.geometry("1000x700")
+window.resizable(0, 0)
 
 # --- Classes Within The Program
 
 # Class for all buttons within the program
 class UniversalButton(Button):
     
-    def __init__(self, master, text, command, fg, **kwargs):
-        super().__init__(master, text=text, command=command, fg=fg)
+    def __init__(self, master, text, command, fg, bg, **kwargs):
+        super().__init__(master, text=text, command=command, fg=fg, bg=bg)
         
         self['text'] = text
         self['command'] = command
         self['fg'] = fg
+        self['bg'] = bg
         
         self.config(**kwargs)
 
 # Class for all labels within the program
 class UniversalLabel(Label):
     
-    def __init__(self, master, text, fg, **kwargs):
-        super().__init__(master, text=text, fg=fg)
+    def __init__(self, master, text, fg, bg, **kwargs):
+        super().__init__(master, text=text, fg=fg, bg=bg)
         
         self['text'] = text
         self['fg'] = fg
+        self['bg'] = bg
         
         self.config(**kwargs)
 
@@ -77,7 +80,7 @@ def input_val_num(inp):
 title_and_search = Frame(window, width = 900, height = 100)
 
 # Setting up the text that displays the name of the screen
-title = UniversalLabel(title_and_search, "Investment Tracker", "black")
+title = Label(title_and_search, text = "Investment Tracker", fg = "black", font = ("Arial bold", 30))
 
 # Setting up the search bar via an entry field
 searchbar = Entry(title_and_search, width = 10)
@@ -89,7 +92,7 @@ searchbar.configure(validate = "key",vcmd = (reg,"%P"))
 '''
 
 # The view button for when the user types into the entry field
-view_button = UniversalButton(title_and_search, "View Stock", tester, "black")
+view_button = UniversalButton(title_and_search, "View Stock", tester, "black", "white")
 
 # --- The Main Graph
 
@@ -105,13 +108,13 @@ graph.place(relx = 0.5, rely = 0.5, anchor = "center")
 timebutton_row = Frame(window, width = 550, height = 50, background = "yellow")
 
 # Creating the buttons
-day_view = UniversalButton(timebutton_row, "DAY", tester, "black")
-week_view = UniversalButton(timebutton_row, "WEEK", tester, "black")
-month_view = UniversalButton(timebutton_row, "MONTH", tester, "black")
-sixmonth_view = UniversalButton(timebutton_row, "6 MONTH", tester, "black")
-year_view = UniversalButton(timebutton_row, "YEAR", tester, "black")
-alltime_view = UniversalButton(timebutton_row, "ALL TIME", tester, "black")
-companyinfo_view = UniversalButton(timebutton_row, "COMPANY INFO", tester, "black")
+day_view = UniversalButton(timebutton_row, "DAY", tester, "black", "yellow")
+week_view = UniversalButton(timebutton_row, "WEEK", tester, "black", "yellow")
+month_view = UniversalButton(timebutton_row, "MONTH", tester, "black", "yellow")
+sixmonth_view = UniversalButton(timebutton_row, "6 MONTH", tester, "black", "yellow")
+year_view = UniversalButton(timebutton_row, "YEAR", tester, "black", "yellow")
+alltime_view = UniversalButton(timebutton_row, "ALL TIME", tester, "black", "yellow")
+companyinfo_view = UniversalButton(timebutton_row, "COMPANY INFO", tester, "black", "yellow")
 
 # --- Recently Viewed Tab
 
@@ -119,7 +122,7 @@ companyinfo_view = UniversalButton(timebutton_row, "COMPANY INFO", tester, "blac
 recentlyviewed = Frame(window, width = 150, height = 300, background = "black")
 
 # Setting up what is within this tab
-recentlyviewed_text = UniversalLabel(recentlyviewed, "Recently Viewed", "red")
+recentlyviewed_text = Label(recentlyviewed, text = "Recently Viewed", fg = "red", bg = "black", font = ("Arial bold", 16))
 
 # --- Stock Info Tab
 
@@ -127,7 +130,7 @@ recentlyviewed_text = UniversalLabel(recentlyviewed, "Recently Viewed", "red")
 stockinfo = Frame(window, width = 150, height = 300, background = "black")
 
 # Setting up its mini title
-stockinfo_text = UniversalLabel(stockinfo, "Stock Info", "red")
+stockinfo_text = Label(stockinfo, text = "Stock Info", fg = "red", bg = "black", font = ("Arial bold", 16))
 
 # Setting up the entry field for amount to buy and sell
 purchase_entry = Entry(stockinfo, width = 5)
@@ -139,8 +142,8 @@ purchase_entry.configure(validate = "key",vcmd = (reg,"%P"))
 '''
 
 # Setting up the buy and sell buttons
-buy_button = UniversalButton(stockinfo, "BUY", tester, "red")
-sell_button = UniversalButton(stockinfo, "SELL", tester, "red")
+buy_button = UniversalButton(stockinfo, "BUY", tester, "red", "black")
+sell_button = UniversalButton(stockinfo, "SELL", tester, "red", "black")
 
 # --- Placing Everything
 
