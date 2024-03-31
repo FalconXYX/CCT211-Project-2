@@ -1,7 +1,7 @@
 """
 CCT211 Project 2: Investment Screen
 """
-
+"""
 # Import tkinter and its functions
 import tkinter
 from tkinter import *
@@ -185,3 +185,4 @@ sell_button.place(relx = 0.75, rely = 0.95, anchor = "s")
 
 # When all is done, run the main window
 window.mainloop()
+"""

@@ -41,6 +41,7 @@ def login(username: str, password: str):
 
             #create acount object
             a = acount.Acount(data['username'], data['password'], data['name'], data['totalInvested'], data['netWorth'], stocks)
+            return True, a
         else:
             return False,""
 

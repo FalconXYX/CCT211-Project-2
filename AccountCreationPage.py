@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 import acountManagement
-
+import InvestmentScreen
 
 class AccountCreationPageClass():
     def __init__(self, window):
@@ -32,8 +32,13 @@ class AccountCreationPageClass():
         else:
             if(acountManagement.checkExistinAcount(email)== False):
                 UserAcount = acountManagement.createAcount(email, password, name)
-                
                 messagebox.showinfo("Success", "Account created successfully! Welcome To Bulls-Eye!")
+                self.window.pack_forget()
+                InvPage = InvestmentScreen.InvestmentScreenClass(self.w, UserAcount)
+                InvPage.drawWidgets()
+
+
+
             else:
                 messagebox.showwarning("Error", "Account already exists!")
 

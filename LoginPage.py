@@ -2,7 +2,9 @@
 
 import tkinter as tk
 from tkinter import *
-
+import  WelcomePage
+import InvestmentScreen
+import acountManagement
 import os
 class LoginPageClass():
 
@@ -32,14 +34,24 @@ class LoginPageClass():
 
     # Define back button and login fucntions 
     def back_home(self):
-        print("Back")
+        self.window.pack_forget()  
+        WelPage = WelcomePage.WelcomePageClass(self.w)
+        WelPage.drawWidgets()
     def login(self):
-        print("Login")
+        
         # Get the entered username and password
         username = self.username_entry.get()
         password = self.password_entry.get()
-        print("Username:", username)
-        print("Password:", password)
+        if(acountManagement.checkExistinAcount(username)):
+            b, acount = acountManagement.login(username, password)
+            if b:
+                self.window.pack_forget()  
+                InvPage = InvestmentScreen.InvestmentScreenClass(self.w, acount)
+                InvPage.drawWidgets()
+            else:
+                #add a login failed message in label
+                print("Login failed")
+
     def drawWidgets(self):
          # Placements
         self.window.update()
