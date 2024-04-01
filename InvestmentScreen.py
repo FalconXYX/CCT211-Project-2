@@ -129,6 +129,18 @@ recentlyviewed_text = Label(recentlyviewed, text = "Recently Viewed", fg = "red"
 # The listbox for this tab
 recentlyviewed_info = Listbox(recentlyviewed, height = 390)
 
+# Info in the listbox
+for i in range(1, 11):
+    recentlyviewed_info.insert(END, i)
+
+# Function for selecting an item within the listbox
+def listbox_selection():
+    for i in recentlyviewed_info.curselection():
+        print(recentlyviewed_info.get(i))
+
+# Button for printing a user's selection to the console
+select_button = UniversalButton(window, "View Recent", listbox_selection, "black", "black")
+
 # --- Stock Info / Portfolio Tab
 
 # Setting up where this tab will be
@@ -153,6 +165,10 @@ sell_button = UniversalButton(stockinfo, "SELL", tester, "red", "black")
 Text label for the price / REMOVE IF NEEDED
 price_label = Label(stockinfo, text = "XXX", fg = "black", bg = "white", font = ("Arial", 15))
 '''
+
+# --- Quit Button
+
+quit_button = UniversalButton(window, "Quit App", window.quit, "black", "black")
 
 # --- Placing Everything
 
@@ -183,6 +199,7 @@ recentlyviewed.place(relx = 0.05, rely = 0.56, anchor = "w")
 # Placing all that is within the recently viewed tab
 recentlyviewed_text.place(relx = 0.5, rely = 0.05, anchor = "n")
 recentlyviewed_info.place(rely = 0.15)
+select_button.place(relx = 0.07, rely = 0.85)
 
 # Placing the stock info tab
 stockinfo.place(relx = 0.95, rely = 0.56, anchor = "e")
@@ -200,6 +217,9 @@ buy_button.place(relx = 0.25, rely = 0.4, anchor = "s")
 sell_button.place(relx = 0.75, rely = 0.4, anchor = "s")
 
 portfolio_text.place(relx = 0.5, rely = 0.45, anchor = "n")
+
+# Placing the quit button
+quit_button.place(relx = 0.83, rely = 0.85)
 
 # When all is done, run the main window
 window.mainloop()
