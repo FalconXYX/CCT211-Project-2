@@ -12,13 +12,17 @@ from tkinter import *
 window = tkinter.Tk()
 window.title("Project 2 - Investment Screen")
 
+# Setting the background to black
+window.configure(bg = "black")
+
 # Defining the size of the window using the "geometry" function
+# Also restricting if the window can be resized
 window.geometry("1000x700")
 window.resizable(0, 0)
 
 # --- Classes Within The Program
 
-# Class for all buttons within the program
+# Class for buttons within the program
 class UniversalButton(Button):
     
     def __init__(self, master, text, command, fg, bg, **kwargs):
@@ -31,7 +35,7 @@ class UniversalButton(Button):
         
         self.config(**kwargs)
 
-# Class for all labels within the program
+# Class for labels within the program
 class UniversalLabel(Label):
     
     def __init__(self, master, text, fg, bg, **kwargs):
@@ -76,20 +80,18 @@ def input_val_num(inp):
 
 # --- Title + Search Bar
 
-# Setting up where these two assets will go
-title_and_search = Frame(window, width = 900, height = 100)
+# Setting up where these assets will go
+title_and_search = Frame(window, width = 900, height = 100, bg = "black")
 
 # Setting up the text that displays the name of the screen
-title = Label(title_and_search, text = "Investment Tracker", fg = "black", font = ("Arial bold", 30))
+title = Label(title_and_search, text = "Investment Tracker", bg = "black", fg = "white", font = ("Arial bold", 30))
 
 # Setting up the search bar via an entry field
 searchbar = Entry(title_and_search, width = 10)
 
-'''
 # Putting the input vaildation function for this search bar
 searchbar_reg = window.register(input_val_text)
-searchbar.configure(validate = "key",vcmd = (reg,"%P"))
-'''
+searchbar.configure(validate = "key",vcmd = (searchbar_reg,"%P"))
 
 # The view button for when the user types into the entry field
 view_button = UniversalButton(title_and_search, "View Stock", tester, "black", "white")
@@ -97,7 +99,7 @@ view_button = UniversalButton(title_and_search, "View Stock", tester, "black", "
 # --- The Main Graph
 
 # Setting up where the graph box will be
-graph = Frame(window, width = 550, height = 300, background = "grey")
+graph = Frame(window, width = 300, height = 300, background = "grey")
 
 # Placing the graph box
 graph.place(relx = 0.5, rely = 0.5, anchor = "center")
@@ -119,31 +121,38 @@ companyinfo_view = UniversalButton(timebutton_row, "COMPANY INFO", tester, "blac
 # --- Recently Viewed Tab
 
 # Setting up where this tab will be
-recentlyviewed = Frame(window, width = 150, height = 300, background = "black")
+recentlyviewed = Frame(window, width = 150, height = 390, background = "white")
 
 # Setting up what is within this tab
-recentlyviewed_text = Label(recentlyviewed, text = "Recently Viewed", fg = "red", bg = "black", font = ("Arial bold", 16))
+recentlyviewed_text = Label(recentlyviewed, text = "Recently Viewed", fg = "red", bg = "white", font = ("Arial bold", 16))
 
-# --- Stock Info Tab
+# The listbox for this tab
+recentlyviewed_info = Listbox(recentlyviewed, height = 390)
+
+# --- Stock Info / Portfolio Tab
 
 # Setting up where this tab will be
-stockinfo = Frame(window, width = 150, height = 300, background = "black")
+stockinfo = Frame(window, width = 150, height = 390, background = "white")
 
-# Setting up its mini title
-stockinfo_text = Label(stockinfo, text = "Stock Info", fg = "red", bg = "black", font = ("Arial bold", 16))
+# Setting up its titles
+stockinfo_text = Label(stockinfo, text = "Stock Info", fg = "red", bg = "white", font = ("Arial bold", 16))
+portfolio_text = Label(stockinfo, text = "User Portfolio", fg = "red", bg = "white", font = ("Arial bold", 16))
 
 # Setting up the entry field for amount to buy and sell
 purchase_entry = Entry(stockinfo, width = 5)
 
-'''
 # Putting the input vaildation function for this purchase entry field
 purchase_entry_reg = window.register(input_val_num)
-purchase_entry.configure(validate = "key",vcmd = (reg,"%P"))
-'''
+purchase_entry.configure(validate = "key",vcmd = (purchase_entry_reg,"%P"))
 
 # Setting up the buy and sell buttons
 buy_button = UniversalButton(stockinfo, "BUY", tester, "red", "black")
 sell_button = UniversalButton(stockinfo, "SELL", tester, "red", "black")
+
+'''
+Text label for the price / REMOVE IF NEEDED
+price_label = Label(stockinfo, text = "XXX", fg = "black", bg = "white", font = ("Arial", 15))
+'''
 
 # --- Placing Everything
 
@@ -158,7 +167,7 @@ searchbar.place(relx = 0.85, rely = 0.5, anchor = "e")
 view_button.place(relx = 0.98, rely = 0.5, anchor = "e")
 
 # Placing the button box
-timebutton_row.place(relx = 0.5, rely = 0.8, anchor = "center")
+timebutton_row.place(relx = 0.5, rely = 0.9, anchor = "center")
 
 # Placing the buttons within the button box frame
 day_view.place(relx = 0.12, rely = 0.5, anchor = "center")
@@ -169,19 +178,28 @@ year_view.place(relx = 0.69, rely = 0.5, anchor = "center")
 alltime_view.place(relx = 0.84, rely = 0.5, anchor = "center")
 
 # Placing the recently viewed tab
-recentlyviewed.place(relx = 0.05, rely = 0.5, anchor = "w")
+recentlyviewed.place(relx = 0.05, rely = 0.56, anchor = "w")
 
 # Placing all that is within the recently viewed tab
 recentlyviewed_text.place(relx = 0.5, rely = 0.05, anchor = "n")
+recentlyviewed_info.place(rely = 0.15)
 
 # Placing the stock info tab
-stockinfo.place(relx = 0.95, rely = 0.5, anchor = "e")
+stockinfo.place(relx = 0.95, rely = 0.56, anchor = "e")
 
 # Placing all that is within the stock info tab
 stockinfo_text.place(relx = 0.5, rely = 0.05, anchor = "n")
-purchase_entry.place(relx = 0.5, rely = 0.8, anchor = "s")
-buy_button.place(relx = 0.25, rely = 0.95, anchor = "s")
-sell_button.place(relx = 0.75, rely = 0.95, anchor = "s")
+
+'''
+REMOVE IF NEEDED
+price_label.place(relx = 0.5, rely = 0.15, anchor = "n")
+'''
+
+purchase_entry.place(relx = 0.5, rely = 0.3, anchor = "s")
+buy_button.place(relx = 0.25, rely = 0.4, anchor = "s")
+sell_button.place(relx = 0.75, rely = 0.4, anchor = "s")
+
+portfolio_text.place(relx = 0.5, rely = 0.45, anchor = "n")
 
 # When all is done, run the main window
 window.mainloop()
