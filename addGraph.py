@@ -14,6 +14,7 @@ def hour(ticker: str, window, name: str ):
     g.formatDatesLong(15)
     g.plot()
     fig = g.show()
+   
     canvas = FigureCanvasTkAgg(fig, 
                             master = window) 
     canvas.draw() 

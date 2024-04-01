@@ -6,7 +6,7 @@ class Graph:
         self.dateList = dateList
         self.titlefont = {'family': 'serif','color':  'black','weight': 'normal','size': 18}
         self.labelfont = {'family': 'serif','color':  'black','weight': 'normal','size': 12}
-        self.fig = Figure(figsize = (6, 6), dpi = 100) 
+        self.fig = Figure(figsize = (5, 4), dpi = 100) 
         self.graph = self.fig.add_subplot(111)  
 
     def plot(self):
