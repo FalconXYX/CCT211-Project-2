@@ -20,9 +20,13 @@ class Acount:
     def updateStock(self, symbol: str, shares: int, purchasePrice: float):
         for s in self.stocks:
             if s.symbol == symbol:
+                print(s.shares, shares)
+                if s.shares < abs(shares) and shares < 0:
+                    return False
                 s.shares += shares
                 #get a weighted average of the purchase price
                 s.purchasePrice = ((s.purchasePrice * s.shares) + (purchasePrice * shares)) / (s.shares + shares)
+                return True
     def updateTotalInvested(self):
         t = 0
         for s in self.stocks:
@@ -42,7 +46,6 @@ class Acount:
     def updateFile(self):
         filename = 'Acounts/' + self.username + '.json'
         my_dict = self.__dict__()
-        print(my_dict)
         with open(filename, 'w') as file:
             json.dump(my_dict, file, indent=4)
             file.close()

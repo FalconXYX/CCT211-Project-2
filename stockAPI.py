@@ -116,5 +116,3 @@ class Stock:
             i = i.tz_convert(local_tz)
             timelist.append(i.strftime('%Y-%m-%d'))
         return timelist, value_list
-c = Stock('AAPL')
-print(c.getName())

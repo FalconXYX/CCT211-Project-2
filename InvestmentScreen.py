@@ -67,7 +67,7 @@ class InvestmentScreenClass():
       
         self.price_label = Label(self.stockinfo, text = "", fg = "black", bg = "white", font = ("Arial", 15))
         
-        self.quit_button = UniversalButton(self.window, "Quit App", window.quit, "black", "black")
+        self.quit_button = UniversalButton(self.window, "Quit App", self.quit, "black", "black")
         self.title_and_search = Frame(self.window, width = 900, height = 100, bg = "black")
 
         # Setting up the text that displays the name of the screen
@@ -116,13 +116,16 @@ class InvestmentScreenClass():
         self.addItems()
     def quit(self):
         self.acount.updateFile()
-        time.sleep(1)
         self.w.quit()
+        
     def addStock(self):
         symbol = self.searchbar.get()
+        symbol = symbol.upper()
         stock = stockAPI.Stock(symbol)
-
-        self.acount.addStock(symbol, stock.getName, 0, 0)
+        try:
+            self.acount.addStock(symbol, stock.getName(), 0, 0)
+        except:
+            return
         self.addItems()
         self.updateStockInfo()
     
@@ -133,7 +136,9 @@ class InvestmentScreenClass():
     
     def sellStock(self):
         amount = self.purchase_entry.get()
-        self.acount.updateStock(self.currentStock.symbol, -int(amount), self.currentStock.getCurrentPrice())
+        status = self.acount.updateStock(self.currentStock.symbol, -int(amount), self.currentStock.getCurrentPrice())
+        if status == False:
+            return
         self.updateStockInfo()
 
     def addItems(self):
