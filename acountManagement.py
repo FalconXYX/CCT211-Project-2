@@ -1,6 +1,8 @@
 import json
 import acount
 import stockRecord
+import bcrypt
+
 # An acount is made up of a username,a password,  a name, total invested,net worth, and a list of stocks
 """
 Instuctions on how to use:
@@ -19,14 +21,17 @@ def checkExistinAcount(username: str) -> bool:
     except:
         return False
 def createAcount(username: str, password: str, name: str)-> acount.Acount:
+    #hash the password
+    hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
     dict = {
         "username": username,
-        "password": password,
+        "password": hashed.decode('utf-8'),
         "name": name,
         "totalInvested": 0,
         "netWorth": 0,
         "stocks": []
     }
+    
     with open('Acounts/'+username+'.json', 'w') as f:
         json.dump(dict, f)
     return acount.Acount(username, password, name, 0, 0, [])
@@ -46,6 +51,6 @@ def login(username: str, password: str):
             return False,""
 
 def checkPassword(answer: str, password: str) -> bool:
-    return answer == password
+    return bcrypt.checkpw(password.encode('utf-8'), answer.encode('utf-8')) 
     
 
