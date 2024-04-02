@@ -122,10 +122,12 @@ class InvestmentScreenClass():
         symbol = self.searchbar.get()
         symbol = symbol.upper()
         stock = stockAPI.Stock(symbol)
+       
         try:
             self.acount.addStock(symbol, stock.getName(), 0, 0)
         except:
-            return
+            print("Stock nxot found")
+            #REPLACE WITH POPUP
         self.addItems()
         self.updateStockInfo()
     
@@ -138,7 +140,8 @@ class InvestmentScreenClass():
         amount = self.purchase_entry.get()
         status = self.acount.updateStock(self.currentStock.symbol, -int(amount), self.currentStock.getCurrentPrice())
         if status == False:
-            return
+            print("Stock nxot enough")
+            #REPLACE WITH POPUP
         self.updateStockInfo()
 
     def addItems(self):

@@ -10,7 +10,10 @@ from tzlocal import get_localzone
 class Stock:
     def __init__(self, ticker: str):
         self.ticker = ticker
-        self.stock = yf.Ticker(ticker)
+        try:
+            self.stock = yf.Ticker(ticker)
+        except:
+            return False
     def getCurrentPrice(self):
         return self.stock.info['currentPrice']
     def getName(self):
