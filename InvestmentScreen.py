@@ -5,6 +5,7 @@ CCT211 Project 2: Investment Screen
 # Import tkinter and its functions
 import tkinter 
 from tkinter import *
+# from tkinter import messagebox
 import acountManagement
 import acount
 import time
@@ -127,7 +128,7 @@ class InvestmentScreenClass():
             self.acount.addStock(symbol, stock.getName(), 0, 0)
         except:
             print("Stock nxot found")
-            #REPLACE WITH POPUP
+            # messagebox.showerror("", "Invaild Stock Name")
         self.addItems()
         self.updateStockInfo()
     
@@ -141,7 +142,7 @@ class InvestmentScreenClass():
         status = self.acount.updateStock(self.currentStock.symbol, -int(amount), self.currentStock.getCurrentPrice())
         if status == False:
             print("Stock nxot enough")
-            #REPLACE WITH POPUP
+            # messagebox.showerror("Please Try Again", "Invaild Selling Amount")
         self.updateStockInfo()
 
     def addItems(self):
