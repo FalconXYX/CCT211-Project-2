@@ -8,3 +8,6 @@ class StockRecord:
     def getCurrentPrice(self):
         stock = stockAPI.Stock(self.symbol)
         return stock.getCurrentPrice()
+    def __dict__(self) -> dict:
+        return {'symbol':self.symbol,'name':self.name,'shares':self.shares,'purchasePrice':self.purchasePrice}
+        

@@ -5,8 +5,11 @@ CCT211 Project 2: Investment Screen
 # Import tkinter and its functions
 import tkinter 
 from tkinter import *
-
-
+import acountManagement
+import acount
+import time
+import addGraph
+import stockAPI
 # --- Classes Within The Program
 
 # Class for buttons within the program
@@ -40,29 +43,32 @@ class InvestmentScreenClass():
         self.window = tkinter.Frame(self.w)
         self.window.configure(bg="black")
         self.acount = acount
-        self.stockinfo = Frame(window, width = 150, height = 390, background = "white")
-
+        self.stockinfo = Frame(self.window, width = 150, height = 390, background = "white")
+        
         # Setting up its titles
         self.stockinfo_text = Label(self.stockinfo, text = "Stock Info", fg = "red", bg = "white", font = ("Arial bold", 16))
         self.portfolio_text = Label(self.stockinfo, text = "User Portfolio", fg = "red", bg = "white", font = ("Arial bold", 16))
+        self.networth_text = Label(self.stockinfo, text = "Net Worth", fg = "black", bg = "white", font = ("Arial bold", 10))
+        self.purchase_text = Label(self.stockinfo, text = "Buy Price", fg = "black", bg = "white", font = ("Arial bold", 10))
+
 
         # Setting up the entry field for amount to buy and sell
         self.purchase_entry = Entry(self.stockinfo, width = 5)
 
         # Putting the input vaildation function for this purchase entry field
-        self.purchase_entry_reg = window.register(self.input_val_num)
+        self.purchase_entry_reg = self.window.register(self.input_val_num)
         self.purchase_entry.configure(validate = "key",vcmd = (self.purchase_entry_reg,"%P"))
 
         # Setting up the buy and sell buttons
-        self.buy_button = UniversalButton(self.stockinfo, "BUY", tester, "red", "black")
-        self.sell_button = UniversalButton(self.stockinfo, "SELL", tester, "red", "black")
+        self.buy_button = UniversalButton(self.stockinfo, "BUY", self.buyStock, "red", "black")
+        self.sell_button = UniversalButton(self.stockinfo, "SELL", self.sellStock, "red", "black")
 
-        '''
-        Text label for the price / REMOVE IF NEEDED
-        price_label = Label(stockinfo, text = "XXX", fg = "black", bg = "white", font = ("Arial", 15))
-        '''
-        self.quit_button = UniversalButton(window, "Quit App", window.quit, "black", "black")
-        self.title_and_search = Frame(window, width = 900, height = 100, bg = "black")
+        
+      
+        self.price_label = Label(self.stockinfo, text = "", fg = "black", bg = "white", font = ("Arial", 15))
+        
+        self.quit_button = UniversalButton(self.window, "Quit App", window.quit, "black", "black")
+        self.title_and_search = Frame(self.window, width = 900, height = 100, bg = "black")
 
         # Setting up the text that displays the name of the screen
         self.title = Label(self.title_and_search, text = "Investment Tracker", bg = "black", fg = "white", font = ("Arial bold", 30))
@@ -75,7 +81,7 @@ class InvestmentScreenClass():
         self.searchbar.configure(validate = "key",vcmd = (self.searchbar_reg,"%P"))
 
         # The view button for when the user types into the entry field
-        self.view_button = UniversalButton(self.title_and_search, "View Stock", tester, "black", "white")
+        self.view_button = UniversalButton(self.title_and_search, "View Stock", self.addStock, "black", "white")
 
         # --- The Main Graph
 
@@ -85,31 +91,60 @@ class InvestmentScreenClass():
         # --- Time Buttons
 
         # Creating a frame to hold all the buttons
-        self.timebutton_row = Frame(window, width = 550, height = 50, background = "yellow")
+        self.timebutton_row = Frame(self.window, width = 550, height = 50, background = "yellow")
 
         # Creating the buttons
-        self.day_view = UniversalButton(self.timebutton_row, "DAY", tester, "black", "yellow")
-        self.week_view = UniversalButton(self.timebutton_row, "WEEK", tester, "black", "yellow")
-        self.month_view = UniversalButton(self.timebutton_row, "MONTH", tester, "black", "yellow")
-        self.sixmonth_view = UniversalButton(self.timebutton_row, "6 MONTH", tester, "black", "yellow")
-        self.year_view = UniversalButton(self.timebutton_row, "YEAR", tester, "black", "yellow")
-        self.alltime_view = UniversalButton(self.timebutton_row, "ALL TIME", tester, "black", "yellow")
-        self.companyinfo_view = UniversalButton(self.timebutton_row, "COMPANY INFO", tester, "black", "yellow")
+        self.day_view = UniversalButton(self.timebutton_row, "DAY",lambda: self.updateGraph("DAY"), "black", "yellow",)
+        self.week_view = UniversalButton(self.timebutton_row, "WEEK",lambda: self.updateGraph("WEEK"), "black", "yellow",)
+        self.month_view = UniversalButton(self.timebutton_row, "MONTH",lambda: self.updateGraph("MONTH"), "black", "yellow")
+        self.sixmonth_view = UniversalButton(self.timebutton_row, "6 MONTH", lambda: self.updateGraph("SIXMONTH"),"black", "yellow")
+        self.year_view = UniversalButton(self.timebutton_row, "YEAR",lambda: self.updateGraph("YEAR"), "black", "yellow",)
+        self.alltime_view = UniversalButton(self.timebutton_row, "ALL TIME",lambda: self.updateGraph("ALLTIME"), "black", "yellow")
+        self.companyinfo_view = UniversalButton(self.timebutton_row, "COMPANY INFO", lambda: self.updateGraph("COMPANYINFO"),"black", "yellow", )
 
         # --- Recently Viewed Tab
 
         # Setting up where this tab will be
-        self.recentlyviewed = Frame(window, width = 150, height = 390, background = "white")
+        self.recentlyviewed = Frame(self.window, width = 150, height = 390, background = "white")
 
         # Setting up what is within this tab
         self.recentlyviewed_text = Label(self.recentlyviewed, text = "Recently Viewed", fg = "red", bg = "white", font = ("Arial bold", 16))
 
         # The listbox for this tab
         self.recentlyviewed_info = Listbox(self.recentlyviewed, height = 390)
-        self.select_button = UniversalButton(window, "View Recent", self.listbox_selection, "black", "black")
+        self.select_button = UniversalButton(self.window, "View Recent", self.listbox_selection, "black", "black")
+        self.addItems()
+    def quit(self):
+        self.acount.updateFile()
+        time.sleep(1)
+        self.w.quit()
+    def addStock(self):
+        symbol = self.searchbar.get()
+        stock = stockAPI.Stock(symbol)
 
+        self.acount.addStock(symbol, stock.getName, 0, 0)
+        self.addItems()
+        self.updateStockInfo()
+    
+    def buyStock(self):
+        amount = self.purchase_entry.get()
+        self.acount.updateStock(self.currentStock.symbol, int(amount), self.currentStock.getCurrentPrice())
+        self.updateStockInfo()
+    
+    def sellStock(self):
+        amount = self.purchase_entry.get()
+        self.acount.updateStock(self.currentStock.symbol, -int(amount), self.currentStock.getCurrentPrice())
+        self.updateStockInfo()
 
-
+    def addItems(self):
+        self.recentlyviewed_info.delete(0,END)
+        num = 1
+        for stock in self.acount.stocks:
+            if num ==1:
+                self.currentStock = self.acount.stocks[0]
+            self.recentlyviewed_info.insert(num,stock.symbol)
+            num+=1
+            
     def input_val_text(self,inp):
         if inp.isalpha():
             return True
@@ -130,13 +165,64 @@ class InvestmentScreenClass():
         
         else:
             return False
+    def updateGraph(self, time):
+        try:
+            self.g.get_tk_widget().pack_forget()
+
+        except:
+            pass
+        if(time == "HOUR"):
+            s = self.currentStock.symbol
+            stock = stockAPI.Stock(s)
+            self.g = addGraph.hour(self.currentStock.symbol,self.graph,stock.getName())
+        if(time == "DAY"):
+            s = self.currentStock.symbol
+            stock = stockAPI.Stock(s)
+            self.g = addGraph.day(self.currentStock.symbol,self.graph,stock.getName())
+        if(time == "WEEK"):
+            s = self.currentStock.symbol
+            stock = stockAPI.Stock(s)
+            self.g = addGraph.week(self.currentStock.symbol,self.graph,stock.getName())
+        if(time == "MONTH"):
+            s = self.currentStock.symbol
+            stock = stockAPI.Stock(s)
+            self.g = addGraph.month(self.currentStock.symbol,self.graph,stock.getName())
+        if(time == "SIXMONTH"):
+            s = self.currentStock.symbol
+            stock = stockAPI.Stock(s)
+            self.g = addGraph.sixMonth(self.currentStock.symbol,self.graph,stock.getName())
+        if(time == "YEAR"):
+            s = self.currentStock.symbol
+            stock = stockAPI.Stock(s)
+            self.g = addGraph.year(self.currentStock.symbol,self.graph,stock.getName())
+        if(time == "ALLTIME"):
+            s = self.currentStock.symbol
+            stock = stockAPI.Stock(s)
+            self.g = addGraph.alltime(self.currentStock.symbol,self.graph,stock.getName())
+
+        self.g.get_tk_widget().pack()
 
 
     # Function for selecting an item within the listbox
     def listbox_selection(self):
         for i in self.recentlyviewed_info.curselection():
-            print(self.recentlyviewed_info.get(i))
+            st = self.recentlyviewed_info.get(i)
+            self.currentStock = self.acount.getStock(st)
+            self.updateStockInfo()
+            self.updateGraph("HOUR")
 
+            
+    def updateStockInfo(self):
+        self.stockinfo_text['text'] = "Stock Info: " + self.currentStock.symbol
+        self.price_label['text'] = "Price: " + str(self.currentStock.getCurrentPrice())
+        self.purchase_entry.delete(0,END)
+        self.acount.updateNetWorth()
+        self.acount.updateTotalInvested()
+        self.purchase_text['text'] = "Buy Price: " + str(round(self.acount.totalInvested))
+        self.networth_text['text'] = "Net Worth: " + str(round(self.acount.netWorth))
+
+
+        
     def drawWidgets(self):
         self.window.update()
         self.window.update_idletasks()
@@ -178,16 +264,17 @@ class InvestmentScreenClass():
         # Placing all that is within the stock info tab
         self.stockinfo_text.place(relx = 0.5, rely = 0.05, anchor = "n")
 
-        '''
-        REMOVE IF NEEDED
-        price_label.place(relx = 0.5, rely = 0.15, anchor = "n")
-        '''
+        
+        self.price_label.place(relx = 0.5, rely = 0.15, anchor = "n")
+        
 
         self.purchase_entry.place(relx = 0.5, rely = 0.3, anchor = "s")
         self.buy_button.place(relx = 0.25, rely = 0.4, anchor = "s")
         self.sell_button.place(relx = 0.75, rely = 0.4, anchor = "s")
 
         self.portfolio_text.place(relx = 0.5, rely = 0.45, anchor = "n")
+        self.networth_text.place(relx = 0.5, rely = 0.55, anchor = "center")
+        self.purchase_text.place(relx = 0.5, rely = 0.6, anchor = "center")
 
         # Placing the quit button
         self.quit_button.place(relx = 0.83, rely = 0.85)

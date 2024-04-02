@@ -20,11 +20,9 @@ class Acount:
     def updateStock(self, symbol: str, shares: int, purchasePrice: float):
         for s in self.stocks:
             if s.symbol == symbol:
-    
                 s.shares += shares
                 #get a weighted average of the purchase price
-                s.purchasePrice = (s.purchasePrice * s.shares + purchasePrice * shares) / (s.shares + shares)
-                
+                s.purchasePrice = ((s.purchasePrice * s.shares) + (purchasePrice * shares)) / (s.shares + shares)
     def updateTotalInvested(self):
         t = 0
         for s in self.stocks:
@@ -36,4 +34,20 @@ class Acount:
             stock = stockAPI.Stock(s.symbol)
             t += stock.getCurrentPrice() * s.shares
         self.netWorth = t
+    def getStock(self,str):
+        for s in self.stocks:
+            if s.symbol == str:
+                return s
+        
+    def updateFile(self):
+        filename = 'Acounts/' + self.username + '.json'
+        my_dict = self.__dict__()
+        print(my_dict)
+        with open(filename, 'w') as file:
+            json.dump(my_dict, file, indent=4)
+            file.close()
+      
+            
+    def __dict__(self) -> dict:
+        return {'username':self.username,'password':self.password,'name':self.name,'totalInvested':self.totalInvested,'netWorth':self.netWorth,'stocks':[s.__dict__() for s in self.stocks]}
 

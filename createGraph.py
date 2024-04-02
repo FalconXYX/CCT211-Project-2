@@ -4,7 +4,7 @@ class Graph:
     def __init__(self, dataList: list, dateList: list):
         self.dataList = dataList
         self.dateList = dateList
-        self.titlefont = {'family': 'serif','color':  'black','weight': 'normal','size': 18}
+        self.titlefont = {'family': 'serif','color':  'black','weight': 'normal','size': 14}
         self.labelfont = {'family': 'serif','color':  'black','weight': 'normal','size': 12}
         self.fig = Figure(figsize = (5, 4), dpi = 100) 
         self.graph = self.fig.add_subplot(111)  
