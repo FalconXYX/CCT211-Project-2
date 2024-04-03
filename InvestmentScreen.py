@@ -49,6 +49,12 @@ class InvestmentScreenClass():
         # Setting up its titles
         self.stockinfo_text = Label(self.stockinfo, text = "Stock Info", fg = "red", bg = "white", font = ("Arial bold", 16))
         self.portfolio_text = Label(self.stockinfo, text = "User Portfolio", fg = "red", bg = "white", font = ("Arial bold", 16))
+
+        self.stockamount = Label(self.stockinfo, text = "Shares Owned", fg = "black", bg = "white", font = ("Arial bold", 10))
+        self.stocknetworth_text = Label(self.stockinfo, text = "Net Worth", fg = "black", bg = "white", font = ("Arial bold", 10))
+        self.stockpurchase_text = Label(self.stockinfo, text = "Buy Price", fg = "black", bg = "white", font = ("Arial bold", 10))
+
+
         self.networth_text = Label(self.stockinfo, text = "Net Worth", fg = "black", bg = "white", font = ("Arial bold", 10))
         self.purchase_text = Label(self.stockinfo, text = "Buy Price", fg = "black", bg = "white", font = ("Arial bold", 10))
 
@@ -231,6 +237,9 @@ class InvestmentScreenClass():
         self.acount.updateTotalInvested()
         self.purchase_text['text'] = "Buy Price: " + str(round(self.acount.totalInvested))
         self.networth_text['text'] = "Net Worth: " + str(round(self.acount.netWorth))
+        self.stockamount['text'] = "Shares Owned: " + str(self.currentStock.shares)
+        self.stocknetworth_text['text'] = "Net Worth: " + str(round(self.currentStock.getCurrentPrice() * self.currentStock.shares))
+        self.stockpurchase_text['text'] = "Buy Price: " + str(round(self.currentStock.purchasePrice * self.currentStock.shares))
 
 
         
@@ -283,9 +292,16 @@ class InvestmentScreenClass():
         self.buy_button.place(relx = 0.25, rely = 0.4, anchor = "s")
         self.sell_button.place(relx = 0.75, rely = 0.4, anchor = "s")
 
-        self.portfolio_text.place(relx = 0.5, rely = 0.45, anchor = "n")
-        self.networth_text.place(relx = 0.5, rely = 0.55, anchor = "center")
-        self.purchase_text.place(relx = 0.5, rely = 0.6, anchor = "center")
+        self.stockamount.place(relx = 0.5, rely = 0.45, anchor = "center")
+        self.stocknetworth_text.place(relx = 0.5, rely = 0.5, anchor = "center")
+        self.stockpurchase_text.place(relx = 0.5, rely = 0.55, anchor = "center")
+
+        self.portfolio_text.place(relx = 0.5, rely = 0.6, anchor = "n")
+
+        
+        self.networth_text.place(relx = 0.5, rely = 0.7, anchor = "center")
+        self.purchase_text.place(relx = 0.5, rely = 0.75, anchor = "center")
+
 
         # Placing the quit button
         self.quit_button.place(relx = 0.83, rely = 0.85)

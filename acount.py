@@ -20,12 +20,13 @@ class Acount:
     def updateStock(self, symbol: str, shares: int, purchasePrice: float):
         for s in self.stocks:
             if s.symbol == symbol:
-                print(s.shares, shares)
                 if s.shares < abs(shares) and shares < 0:
                     return False
-                s.shares += shares
+                
                 #get a weighted average of the purchase price
+                
                 s.purchasePrice = ((s.purchasePrice * s.shares) + (purchasePrice * shares)) / (s.shares + shares)
+                s.shares += shares
                 return True
     def updateTotalInvested(self):
         t = 0
