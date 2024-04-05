@@ -6,6 +6,7 @@ import  WelcomePage
 import InvestmentScreen
 import acountManagement
 import os
+
 class LoginPageClass():
 
     def __init__(self,window):
@@ -20,7 +21,7 @@ class LoginPageClass():
         self.logo_image = tk.PhotoImage(file=os.path.join(self.current_directory, "logo.png"))
         self.logo_image = self.logo_image.subsample(9)
 
-        # Labels and entries
+        # Stylize labels and entries
         self.logo_label = tk.Label(self.window, image=self.logo_image, bg="black")
         self.subheading_label = tk.Label(self.window, text="Login to your Account", font=("SF Pro Text", 30), bg="black", fg="white")
         self.username_label = tk.Label(self.window, text="Username:", font=("SF Pro Text", 16), bg="black", fg="white")
@@ -51,9 +52,9 @@ class LoginPageClass():
             else:
                 #add a login failed message in label
                 print("Login failed")
-
+                
+    # Placements
     def drawWidgets(self):
-         # Placements
         self.window.update()
         self.window.update_idletasks()
         self.window.pack(fill="both", expand=True)
