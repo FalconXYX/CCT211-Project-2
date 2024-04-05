@@ -18,7 +18,7 @@ class WelcomePageClass():
         self.window.configure(bg="black")
         # Load the logo image
         self.logo_image = tk.PhotoImage(file=os.path.join(self.current_directory, "logo.png"))
-        # Resize the image by a factor of 2
+        # Resize the image by a factor of 9
         self.logo_image = self.logo_image.subsample(9)
         # Logo label
         self.logo_label = tk.Label(self.window, image=self.logo_image, bg="black")
@@ -28,7 +28,7 @@ class WelcomePageClass():
         self.frame = tk.Frame(self.window, bg="black")
         self.existing_user_button = tk.Button(self.frame, text="Existing User", command=self.existing_user, bg="white", fg="black", font=("SF Pro Text", 18, "bold"))
         self.new_user_button = tk.Button(self.frame, text="New User", command=self.new_user, bg="white", fg="black", font=("SF Pro Text", 18, "bold"))
-        self.title_label = tk.Label(window, text="Get Started Today", bg="black", fg="orange", font=("SF Pro Text", 45))
+        self.title_label = tk.Label(window, text="Get Started Here", bg="black", fg="orange", font=("SF Pro Text", 45))
 
 
     def existing_user(self):
