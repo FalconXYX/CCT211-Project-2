@@ -22,7 +22,7 @@ class WelcomePageClass():
         self.logo_image = self.logo_image.subsample(9)
         # Logo label
         self.logo_label = tk.Label(self.window, image=self.logo_image, bg="black")
-        # Stylize text
+        # Stylize Labels 
         self.subheading_label = tk.Label(self.window, text="Welcome to Bulls-Eye", font=("SF Pro Text", 35), bg="black", fg="white")
         self.caption_label = tk.Label(window, text="Start managing your investments today", font=("Sans Serif", 17), bg="black", fg="white")
         self.frame = tk.Frame(self.window, bg="black")
@@ -30,7 +30,7 @@ class WelcomePageClass():
         self.new_user_button = tk.Button(self.frame, text="New User", command=self.new_user, bg="white", fg="black", font=("SF Pro Text", 18, "bold"))
         self.title_label = tk.Label(window, text="Get Started Here", bg="black", fg="orange", font=("SF Pro Text", 45))
 
-    # Define two button functions
+    # Define Login and Existing User button functions
     def existing_user(self):
         self.window.pack_forget()  
         LogPage = LoginPage.LoginPageClass(self.w)
