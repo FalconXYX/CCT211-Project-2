@@ -1,0 +1,15 @@
+— How To Use Bulls-eye —
+
+Needed Python Packages
+- yfinances 
+- matplotlib
+- pandas
+- numpy
+- tzlocal
+- bcrypt
+
+To Run Program
+1. Ensure that all .py files are within the same folder as “main.py”.
+2. Open up your IDE of choice.
+3. Open “main.py”.
+4. Run the program.
