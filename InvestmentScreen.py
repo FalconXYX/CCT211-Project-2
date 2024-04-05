@@ -3,6 +3,7 @@ CCT211 Project 2: Investment Screen
 """
 
 # Import tkinter and its functions
+# Also adding all functions from the repo
 import tkinter 
 from tkinter import *
 from tkinter import messagebox
@@ -11,6 +12,7 @@ import acount
 import time
 import addGraph
 import stockAPI
+
 # --- Classes Within The Program
 
 # Class for buttons within the program
@@ -38,31 +40,34 @@ class UniversalLabel(Label):
         
         self.config(**kwargs)
 
+# The class for this window
+# Will be used later in the "main" file to draw this screen as a frame
 class InvestmentScreenClass():
     def __init__(self, window, acount):
         self.w = window
         self.window = tkinter.Frame(self.w)
         self.window.configure(bg="black")
         self.acount = acount
+
+        # The frame that will hold the graph
         self.stockinfo = Frame(self.window, width = 150, height = 390, background = "white")
         
         # Setting up its titles
         self.stockinfo_text = Label(self.stockinfo, text = "Stock Info", fg = "red", bg = "white", font = ("Arial bold", 16))
         self.portfolio_text = Label(self.stockinfo, text = "User Portfolio", fg = "red", bg = "white", font = ("Arial bold", 16))
 
+        # Labels used for the graph
         self.stockamount = Label(self.stockinfo, text = "Shares Owned", fg = "black", bg = "white", font = ("Arial bold", 10))
         self.stocknetworth_text = Label(self.stockinfo, text = "Net Worth", fg = "black", bg = "white", font = ("Arial bold", 10))
         self.stockpurchase_text = Label(self.stockinfo, text = "Buy Price", fg = "black", bg = "white", font = ("Arial bold", 10))
 
-
         self.networth_text = Label(self.stockinfo, text = "Net Worth", fg = "black", bg = "white", font = ("Arial bold", 10))
         self.purchase_text = Label(self.stockinfo, text = "Buy Price", fg = "black", bg = "white", font = ("Arial bold", 10))
-
 
         # Setting up the entry field for amount to buy and sell
         self.purchase_entry = Entry(self.stockinfo, width = 5)
 
-        # Putting the input vaildation function for this purchase entry field
+        # Putting the input vaildation function for the purchase entry field
         self.purchase_entry_reg = self.window.register(self.input_val_num)
         self.purchase_entry.configure(validate = "key",vcmd = (self.purchase_entry_reg,"%P"))
 
@@ -70,11 +75,15 @@ class InvestmentScreenClass():
         self.buy_button = UniversalButton(self.stockinfo, "BUY", self.buyStock, "red", "black")
         self.sell_button = UniversalButton(self.stockinfo, "SELL", self.sellStock, "red", "black")
 
-        
-      
+        # The label that holds the price of the currently searched stock
         self.price_label = Label(self.stockinfo, text = "", fg = "black", bg = "white", font = ("Arial", 15))
-        
+
+        # The button for quitting the application
         self.quit_button = UniversalButton(self.window, "Quit App", self.quit, "black", "black")
+
+        # --- The Top Part of the Window
+
+        # The frame for holding the window's title and the stock search bar
         self.title_and_search = Frame(self.window, width = 900, height = 100, bg = "black")
 
         # Setting up the text that displays the name of the screen
@@ -121,30 +130,39 @@ class InvestmentScreenClass():
         self.recentlyviewed_info = Listbox(self.recentlyviewed, height = 390)
         self.select_button = UniversalButton(self.window, "View Recent", self.listbox_selection, "black", "black")
         self.addItems()
+
+    # The function that updates data such as recently viewed stocks and any purchases
+    # Occurs when the user quits the application
     def quit(self):
         self.acount.updateFile()
         self.w.quit()
-        
+
+    # The function to grab the stock that the user has searched for
+    # To ensure minimal errors, the search is set to be in all upper case letters
     def addStock(self):
         symbol = self.searchbar.get()
         symbol = symbol.upper()
         stock = stockAPI.Stock(symbol)
-       
+
         try:
             self.acount.addStock(symbol, stock.getName(), 0, 0)
             self.currentStock = self.acount.getStock(symbol)
+            
+        # If the stock search is invaild, a message box appears
         except:
             
             messagebox.showerror("", "Invaild Stock Name")
             return
         self.addItems()
         self.updateStockInfo()
-    
+
+    # The function for buying stocks
     def buyStock(self):
         amount = self.purchase_entry.get()
         self.acount.updateStock(self.currentStock.symbol, int(amount), self.currentStock.getCurrentPrice())
         self.updateStockInfo()
-    
+
+    # The function for selling stocks
     def sellStock(self):
         amount = self.purchase_entry.get()
         status = self.acount.updateStock(self.currentStock.symbol, -int(amount), self.currentStock.getCurrentPrice())
@@ -153,6 +171,7 @@ class InvestmentScreenClass():
             return
         self.updateStockInfo()
 
+    # The function that adds any searched stocks into the Recently Viewed tab
     def addItems(self):
         self.recentlyviewed_info.delete(0,END)
         num = 1
@@ -161,7 +180,8 @@ class InvestmentScreenClass():
                 self.currentStock = self.acount.stocks[0]
             self.recentlyviewed_info.insert(num,stock.symbol)
             num+=1
-            
+
+    # Input vaildation function for text only
     def input_val_text(self,inp):
         if inp.isalpha():
             return True
@@ -182,6 +202,8 @@ class InvestmentScreenClass():
         
         else:
             return False
+
+    # The function that updates the graph based on the selected time buttons along the bottom of the window
     def updateGraph(self, time):
         try:
             self.g.get_tk_widget().pack_forget()
@@ -228,7 +250,7 @@ class InvestmentScreenClass():
             self.updateStockInfo()
             self.updateGraph("HOUR")
 
-            
+    # The function that displays information about the currently searched for stock   
     def updateStockInfo(self):
         self.stockinfo_text['text'] = "Stock Info: " + self.currentStock.symbol
         self.price_label['text'] = "Price: " + str(self.currentStock.getCurrentPrice())
@@ -242,7 +264,7 @@ class InvestmentScreenClass():
         self.stockpurchase_text['text'] = "Buy Price: " + str(round(self.currentStock.purchasePrice * self.currentStock.shares))
 
 
-        
+    # Finally, all widgets are drawn onto the window using the place method
     def drawWidgets(self):
         self.window.update()
         self.window.update_idletasks()
@@ -287,7 +309,7 @@ class InvestmentScreenClass():
         
         self.price_label.place(relx = 0.5, rely = 0.15, anchor = "n")
         
-
+        # Placing the stock purchase bar, as well as the buy and sell buttons
         self.purchase_entry.place(relx = 0.5, rely = 0.3, anchor = "s")
         self.buy_button.place(relx = 0.25, rely = 0.4, anchor = "s")
         self.sell_button.place(relx = 0.75, rely = 0.4, anchor = "s")
