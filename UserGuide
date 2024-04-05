@@ -9,7 +9,8 @@ Needed Python Packages
 - bcrypt
 
 To Run Program
-1. Ensure that all .py files are within the same folder as “main.py”.
-2. Open up your IDE of choice.
-3. Open “main.py”.
-4. Run the program.
+1. Download this repository as a zip folder, and unzip it on your computer.
+2. Ensure that all .py files are within the same folder as “main.py”.
+3. Open up your IDE of choice.
+4. Open “main.py”.
+5. Run the program.
