@@ -7,6 +7,7 @@ import os
 class AccountCreationPageClass():
     def __init__(self, window):
         self.w = window
+        self.current_directory = os.path.dirname(__file__)
         self.window = tk.Frame(self.w)
         self.window.configure(bg="black")
         self.name_entry = tk.Entry(self.window)
