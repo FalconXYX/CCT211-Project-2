@@ -13,14 +13,15 @@ class AccountCreationPageClass():
         self.email_entry = tk.Entry(self.window)
         self.password_entry = tk.Entry(self.window, show="*")
         self.terms_var = tk.BooleanVar()
-        self. nameLabel = tk.Label(self.window, text="Name:", bg="black")
-        self.terms_checkbox = tk.Checkbutton(self.window, text="I have read and accept the terms and conditions to using Bulls-Eye.", variable=self.terms_var, bg="black")
+        self. nameLabel = tk.Label(self.window, text="Name:", bg="black", fg="white")
+        self.terms_checkbox = tk.Checkbutton(self.window, text="I have read and accept the terms and conditions to using Bulls-Eye.", variable=self.terms_var, bg="black", fg="white")
         self.create_button = tk.Button(self.window, text="Create Account", command=self.create_account)
-        self.emailLabel = tk.Label(self.window, text="Username:", bg="black")
-        self.passwordLabel = tk.Label(self.window, text="Password:", bg="black")
+        self.emailLabel = tk.Label(self.window, text="Username:", bg="black", fg="white")
+        self.passwordLabel = tk.Label(self.window, text="Password:", bg="black", fg="white")
         self.logo_image = tk.PhotoImage(file=os.path.join(self.current_directory, "logo.png"))
         self.logo_image = self.logo_image.subsample(9)
         self.window.configure(bg="black")
+        self.logo_label = tk.Label(self.window, image=self.logo_image, bg="black")
 
 
     def create_account(self):
