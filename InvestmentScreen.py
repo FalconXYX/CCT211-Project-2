@@ -79,7 +79,7 @@ class InvestmentScreenClass():
         self.price_label = Label(self.stockinfo, text = "", fg = "black", bg = "white", font = ("Arial", 15))
 
         # The button for quitting the application
-        self.quit_button = UniversalButton(self.window, "Quit App", self.quit, "black", "black")
+        self.quit_button = UniversalButton(self.window, "Quit App", self.quit, "white", "black")
 
         # --- The Top Part of the Window
 
@@ -128,7 +128,7 @@ class InvestmentScreenClass():
 
         # The listbox for this tab
         self.recentlyviewed_info = Listbox(self.recentlyviewed, height = 390)
-        self.select_button = UniversalButton(self.window, "View Recent", self.listbox_selection, "black", "black")
+        self.select_button = UniversalButton(self.window, "Select Stock", self.listbox_selection, "white", "black")
         self.addItems()
 
     # The function that updates data such as recently viewed stocks and any purchases

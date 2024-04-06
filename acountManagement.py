@@ -51,6 +51,7 @@ def login(username: str, password: str):
             return False,""
 
 def checkPassword(answer: str, password: str) -> bool:
+    #turn answer into byte string
     return bcrypt.checkpw(password.encode('utf-8'), answer.encode('utf-8')) 
     
 
