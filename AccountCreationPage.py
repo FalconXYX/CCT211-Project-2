@@ -52,8 +52,8 @@ class AccountCreationPageClass():
 
     def drawWidgets(self):
         self.window.pack(fill="both", expand=True)
-        self.title_label.place(anchor=tk.CENTER)
-        self.subheading_label.place(anchor=tk.CENTER)
+        self.title_label.place()
+        self.subheading_label.place()
         self.nameLabel.pack()
         self.name_entry.pack()
 
