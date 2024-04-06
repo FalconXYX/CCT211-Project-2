@@ -159,12 +159,18 @@ class InvestmentScreenClass():
     # The function for buying stocks
     def buyStock(self):
         amount = self.purchase_entry.get()
+        if(amount == ""):
+            messagebox.showerror("Please Try Again", "Invaild Buying Amount")
+            return
         self.acount.updateStock(self.currentStock.symbol, int(amount), self.currentStock.getCurrentPrice())
         self.updateStockInfo()
 
     # The function for selling stocks
     def sellStock(self):
         amount = self.purchase_entry.get()
+        if(amount == ""):
+            messagebox.showerror("Please Try Again", "Invaild Buying Amount")
+            return
         status = self.acount.updateStock(self.currentStock.symbol, -int(amount), self.currentStock.getCurrentPrice())
         if status == False:
             messagebox.showerror("Please Try Again", "Invaild Selling Amount")
