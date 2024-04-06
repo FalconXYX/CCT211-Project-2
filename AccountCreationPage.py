@@ -24,6 +24,7 @@ class AccountCreationPageClass():
         self.window.configure(bg="black")
         self.logo_label = tk.Label(self.window, image=self.logo_image, bg="black")
         self.title_label = tk.Label(self.window, text="Create Your Account", bg="black", fg="orange", font=("SF Pro Text", 45))
+        self.subheading_label = tk.Label(self.window, text="Join The Team!", font=("SF Pro Text", 30), bg="black", fg="white")
 
 
     def create_account(self):
@@ -51,7 +52,8 @@ class AccountCreationPageClass():
 
     def drawWidgets(self):
         self.window.pack(fill="both", expand=True)
-        self.title_label.place()
+        self.title_label.place(anchor=tk.CENTER)
+        self.subheading_label.place(anchor=tk.CENTER)
         self.nameLabel.pack()
         self.name_entry.pack()
 
