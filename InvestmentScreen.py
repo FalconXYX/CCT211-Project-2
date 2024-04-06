@@ -12,7 +12,7 @@ import acount
 import time
 import addGraph
 import stockAPI
-
+import os
 # --- Classes Within The Program
 
 # Class for buttons within the program
@@ -51,7 +51,14 @@ class InvestmentScreenClass():
 
         # The frame that will hold the graph
         self.stockinfo = Frame(self.window, width = 150, height = 390, background = "white")
-        
+        self.current_directory = os.path.dirname(__file__)
+        self.logo_image = tkinter.PhotoImage(file=os.path.join(self.current_directory, "logo-text.png"))
+        self.logo_image = self.logo_image.subsample(9)
+
+        # Stylize labels and entries
+        self.logo_label = tkinter.Label(self.window, image=self.logo_image, bg="black")
+
+
         # Setting up its titles
         self.stockinfo_text = Label(self.stockinfo, text = "Stock Info", fg = "red", bg = "white", font = ("Arial bold", 16))
         self.portfolio_text = Label(self.stockinfo, text = "User Portfolio", fg = "red", bg = "white", font = ("Arial bold", 16))
@@ -84,7 +91,7 @@ class InvestmentScreenClass():
         # --- The Top Part of the Window
 
         # The frame for holding the window's title and the stock search bar
-        self.title_and_search = Frame(self.window, width = 900, height = 100, bg = "black")
+        self.title_and_search = Frame(self.window, width = 900, height = 80, bg = "black")
 
         # Setting up the text that displays the name of the screen
         self.title = Label(self.title_and_search, text = "Investment Tracker", bg = "black", fg = "white", font = ("Arial bold", 30))
@@ -275,10 +282,12 @@ class InvestmentScreenClass():
         self.window.update()
         self.window.update_idletasks()
         self.window.pack(fill="both", expand=True)
+
+        self.logo_label.place(relx=0.06, rely=0.01)
         self.graph.place(relx = 0.5, rely = 0.5, anchor = "center")
 
         # Placing the frame for the title and search bar
-        self.title_and_search.place(relx = 0.05, rely = 0.1)
+        self.title_and_search.place(relx = 0.05, rely = 0.15)
 
         # Placing the title of this screen
         self.title.place(relx = 0, rely = 0.5, anchor = "w")
