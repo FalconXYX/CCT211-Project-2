@@ -1,0 +1,27 @@
+{
+    "username": "JohnSmith",
+    "password": "$2b$12$I1e6nlRuNcVNdGqrGl7Qc.RlfUOFlgjho4OwIjH1/3eLChaJQDz9m",
+    "name": "JohnSmith",
+    "totalInvested": 42470.86,
+    "netWorth": 42470.86000000001,
+    "stocks": [
+        {
+            "symbol": "AAPL",
+            "name": "Apple Inc.",
+            "shares": 29,
+            "purchasePrice": 169.58
+        },
+        {
+            "symbol": "NVDA",
+            "name": "NVIDIA Corporation",
+            "shares": 33,
+            "purchasePrice": 880.08
+        },
+        {
+            "symbol": "MSFT",
+            "name": "Microsoft Corporation",
+            "shares": 20,
+            "purchasePrice": 425.51999999999987
+        }
+    ]
+}
