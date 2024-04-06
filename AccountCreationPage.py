@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import acountManagement
 import InvestmentScreen
+import os
 
 class AccountCreationPageClass():
     def __init__(self, window):
